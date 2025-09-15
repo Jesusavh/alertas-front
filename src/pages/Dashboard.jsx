@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
@@ -22,12 +22,42 @@ import Banner from '../partials/Banner';
 function Dashboard() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [refreshFlag, setRefreshFlag] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file && (file.name.endsWith('.xlsx') || file.name.endsWith('.xls'))) {
+      const formData = new FormData();
+      formData.append('file', file);
+      fetch('http://localhost:3001/api/upload', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => {
+          if (response.ok) {
+            alert('Archivo subido exitosamente');
+            setRefreshFlag(true);
+          } else {
+            alert('Error al subir el archivo');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Error al subir el archivo');
+        });
+    } else {
+      alert('Por favor, selecciona un archivo Excel (.xlsx o .xls)');
+    }
+    // Reset input
+    e.target.value = '';
+  };
 
   return (
     <div className="flex h-screen overflow-hidden">
 
       {/* Sidebar */}
-      {/* <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> */}
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
@@ -53,12 +83,22 @@ function Dashboard() {
                 {/* Datepicker built with React Day Picker */}
                 <Datepicker align="right" />
                 {/* Add view button */}
-                <button className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white">
+                <button
+                  className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white"
+                  onClick={() => fileInputRef.current?.click()}
+                >
                   <svg className="fill-current shrink-0 xs:hidden" width="16" height="16" viewBox="0 0 16 16">
                     <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                   </svg>
-                  <span className="max-xs:sr-only">Add View</span>
-                </button>                
+                  <span className="max-xs:sr-only">Subir Excel</span>
+                </button>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  accept=".xlsx,.xls"
+                  onChange={handleFileUpload}
+                  style={{ display: 'none' }}
+                />
               </div>
 
             </div>
@@ -85,7 +125,7 @@ function Dashboard() {
               {/* Stacked bar chart (Sales VS Refunds) */}
               {/* <DashboardCard09 /> */}
               {/* Card (Customers) */}
-              <DashboardCard10 />
+              <DashboardCard10 refreshFlag={refreshFlag} setRefreshFlag={setRefreshFlag} />
               {/* Card (Reasons for Refunds) */}
               {/* <DashboardCard11 /> */}
               {/* Card (Recent Activity) */}
@@ -98,7 +138,7 @@ function Dashboard() {
           </div>
         </main>
 
-        <Banner />
+        {/* <Banner /> */}
 
       </div>
     </div>
