@@ -146,7 +146,7 @@ function Sidebar({
                               </span>
                             </NavLink>
                           </li>
-                          <li className="mb-1 last:mb-0">
+                          {/* <li className="mb-1 last:mb-0">
                             <NavLink
                               end
                               to="https://cruip.com/mosaic/"
@@ -171,7 +171,7 @@ function Sidebar({
                                 Fintech
                               </span>
                             </NavLink>
-                          </li>
+                          </li> */}
                         </ul>
                       </div>
                     </React.Fragment>
@@ -179,7 +179,7 @@ function Sidebar({
                 }}
               </SidebarLinkGroup>
               {/* E-Commerce */}
-              <SidebarLinkGroup activecondition={pathname.includes("ecommerce")}>
+              {/* <SidebarLinkGroup activecondition={pathname.includes("ecommerce")}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
@@ -203,7 +203,7 @@ function Sidebar({
                               E-Commerce
                             </span>
                           </div>
-                          {/* Icon */}
+                          {/* Icon
                           <div className="flex shrink-0 ml-2">
                             <svg className={`w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500 ${open && "rotate-180"}`} viewBox="0 0 12 12">
                               <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
@@ -348,9 +348,9 @@ function Sidebar({
                     </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
               {/* Community */}
-              <SidebarLinkGroup activecondition={pathname.includes("community")}>
+              {/* <SidebarLinkGroup activecondition={pathname.includes("community")}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
@@ -374,7 +374,7 @@ function Sidebar({
                               Community
                             </span>
                           </div>
-                          {/* Icon */}
+                          {/* Icon
                           <div className="flex shrink-0 ml-2">
                             <svg className={`w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500 ${open && "rotate-180"}`} viewBox="0 0 12 12">
                               <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
@@ -493,9 +493,9 @@ function Sidebar({
                     </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
               {/* Finance */}
-              <SidebarLinkGroup activecondition={pathname.includes("finance")}>
+              {/* <SidebarLinkGroup activecondition={pathname.includes("finance")}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
@@ -520,7 +520,7 @@ function Sidebar({
                               Finance
                             </span>
                           </div>
-                          {/* Icon */}
+                          {/* Icon 
                           <div className="flex shrink-0 ml-2">
                             <svg className={`w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500 ${open && "rotate-180"}`} viewBox="0 0 12 12">
                               <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
@@ -574,13 +574,13 @@ function Sidebar({
                     </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
               {/* Job Board */}
-              <SidebarLinkGroup activecondition={pathname.includes("job")}>
+              {/* <SidebarLinkGroup activecondition={pathname.includes("job")}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
-                      <a
+                      {/* <a
                         href="#0"
                         className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
                           pathname.includes("job") ? "" : "hover:text-gray-900 dark:hover:text-white"
@@ -600,15 +600,15 @@ function Sidebar({
                               Job Board
                             </span>
                           </div>
-                          {/* Icon */}
+                          {/* Icon 
                           <div className="flex shrink-0 ml-2">
                             <svg className={`w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500 ${open && "rotate-180"}`} viewBox="0 0 12 12">
                               <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
                             </svg>
                           </div>
                         </div>
-                      </a>
-                      <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                      </a> */}
+                      {/* <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                         <ul className={`pl-8 mt-1 ${!open && "hidden"}`}>
                           <li className="mb-1 last:mb-0">
                             <NavLink
@@ -650,13 +650,13 @@ function Sidebar({
                             </NavLink>
                           </li>
                         </ul>
-                      </div>
+                      </div> 
                     </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
               {/* Tasks */}
-              <SidebarLinkGroup activecondition={pathname.includes("tasks")}>
+              {/* <SidebarLinkGroup activecondition={pathname.includes("tasks")}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
@@ -680,7 +680,7 @@ function Sidebar({
                               Tasks
                             </span>
                           </div>
-                          {/* Icon */}
+                          {/* Icon
                           <div className="flex shrink-0 ml-2">
                             <svg className={`w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500 ${open && "rotate-180"}`} viewBox="0 0 12 12">
                               <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
@@ -721,7 +721,7 @@ function Sidebar({
                     </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
               {/* Messages */}
               <li className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-linear-to-r ${pathname.includes("messages") && "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"}`}>
                 <NavLink
@@ -806,7 +806,7 @@ function Sidebar({
                 </NavLink>
               </li>
               {/* Settings */}
-              <SidebarLinkGroup activecondition={pathname.includes("settings")}>
+              {/* <SidebarLinkGroup activecondition={pathname.includes("settings")}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
@@ -830,7 +830,7 @@ function Sidebar({
                               Settings
                             </span>
                           </div>
-                          {/* Icon */}
+                          {/* Icon
                           <div className="flex shrink-0 ml-2">
                             <svg className={`w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500 ${open && "rotate-180"}`} viewBox="0 0 12 12">
                               <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
@@ -923,9 +923,9 @@ function Sidebar({
                     </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
               {/* Utility */}
-              <SidebarLinkGroup activecondition={pathname.includes("utility")}>
+              {/* <SidebarLinkGroup activecondition={pathname.includes("utility")}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
@@ -950,7 +950,7 @@ function Sidebar({
                               Utility
                             </span>
                           </div>
-                          {/* Icon */}
+                          {/* Icon
                           <div className="flex shrink-0 ml-2">
                             <svg className={`w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500 ${open && "rotate-180"}`} viewBox="0 0 12 12">
                               <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
@@ -1030,7 +1030,7 @@ function Sidebar({
                     </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
             </ul>
           </div>
           {/* More group */}

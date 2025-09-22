@@ -24,8 +24,7 @@ function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [refreshFlag, setRefreshFlag] = useState(false);
   const [dateRange, setDateRange] = useState({
-    from: new Date(2022, 0, 20),
-    to: new Date(),
+    
   });
   const fileInputRef = useRef(null);
 
@@ -66,7 +65,7 @@ function Dashboard() {
     <div className="flex h-screen overflow-hidden">
 
       {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      {/* <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> */}
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
