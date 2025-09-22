@@ -23,6 +23,10 @@ function Dashboard() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [refreshFlag, setRefreshFlag] = useState(false);
+  const [dateRange, setDateRange] = useState({
+    from: new Date(2022, 0, 20),
+    to: new Date(),
+  });
   const fileInputRef = useRef(null);
 
   const handleFileUpload = (e) => {
@@ -35,16 +39,21 @@ function Dashboard() {
         body: formData,
       })
         .then(response => {
-          if (response.ok) {
-            alert('Archivo subido exitosamente');
+          if (!response.ok) {
+                return response.json().then(errorData => {
+                // Throw an error with the message from the server
+                throw new Error(errorData.error);
+            });
+          } 
+          // For successful responses, proceed with parsing the JSON
+            return response.json();
+        }).then(result => {
+            alert(`Archivo ${file.name} subido con éxito`);
             setRefreshFlag(true);
-          } else {
-            alert('Error al subir el archivo');
-          }
         })
         .catch(error => {
-          console.error('Error:', error);
-          alert('Error al subir el archivo');
+          console.error('Error:',error.message );
+          alert(error.message);
         });
     } else {
       alert('Por favor, selecciona un archivo Excel (.xlsx o .xls)');
@@ -81,7 +90,7 @@ function Dashboard() {
                 {/* Filter button */}
                 <FilterButton align="right" />
                 {/* Datepicker built with React Day Picker */}
-                <Datepicker align="right" />
+                <Datepicker date={dateRange} setDate={setDateRange} align="right" />
                 {/* Add view button */}
                 <button
                   className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white"
@@ -125,7 +134,7 @@ function Dashboard() {
               {/* Stacked bar chart (Sales VS Refunds) */}
               {/* <DashboardCard09 /> */}
               {/* Card (Customers) */}
-              <DashboardCard10 refreshFlag={refreshFlag} setRefreshFlag={setRefreshFlag} />
+              <DashboardCard10 refreshFlag={refreshFlag} setRefreshFlag={setRefreshFlag} dateRange={dateRange} />
               {/* Card (Reasons for Refunds) */}
               {/* <DashboardCard11 /> */}
               {/* Card (Recent Activity) */}

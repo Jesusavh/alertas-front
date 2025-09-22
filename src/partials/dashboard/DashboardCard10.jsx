@@ -7,77 +7,132 @@ import Image03 from '../../images/user-36-07.jpg';
 import Image04 from '../../images/user-36-08.jpg';
 import Image05 from '../../images/user-36-09.jpg';
 
-function DashboardCard10({ refreshFlag, setRefreshFlag }) {
+function DashboardCard10({ refreshFlag, setRefreshFlag, dateRange }) {
   const [visitas, setVisitas] = useState([]);
+  const [representantes, setRepresentantes] = useState([]);
+  const [supervisores, setSupervisores] = useState([]);
+  const [selectedType, setSelectedType] = useState('visitas');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const fetchVisitas = async () => {
     try {
       const res = await fetch("http://localhost:3001/api/visitas");
       const data = await res.json();
+      console.log("Visitas cargadas:", data);
       setVisitas(data);
     } catch (err) {
       console.error("Error al cargar visitas:", err);
     }
   };
-  // const customers = [
 
-  //   {
-  //     id: '0',
-  //     image: Image01,
-  //     name: 'Alex Shatov',
-  //     email: 'alexshatov@gmail.com',
-  //     location: '🇺🇸',
-  //     spent: '$2,890.66',
-  //   },
-  //   {
-  //     id: '1',
-  //     image: Image02,
-  //     name: 'Philip Harbach',
-  //     email: 'philip.h@gmail.com',
-  //     location: '🇩🇪',
-  //     spent: '$2,767.04',
-  //   },
-  //   {
-  //     id: '2',
-  //     image: Image03,
-  //     name: 'Mirko Fisuk',
-  //     email: 'mirkofisuk@gmail.com',
-  //     location: '🇫🇷',
-  //     spent: '$2,996.00',
-  //   },
-  //   {
-  //     id: '3',
-  //     image: Image04,
-  //     name: 'Olga Semklo',
-  //     email: 'olga.s@cool.design',
-  //     location: '🇮🇹',
-  //     spent: '$1,220.66',
-  //   },
-  //   {
-  //     id: '4',
-  //     image: Image05,
-  //     name: 'Burak Long',
-  //     email: 'longburak@gmail.com',
-  //     location: '🇬🇧',
-  //     spent: '$1,890.66',
-  //   },
-  // ];
+  const fetchRepresentantes = async () => {
+    try {
+      const res = await fetch("http://localhost:3001/api/representantes");
+      const data = await res.json();
+      console.log("Representantes cargados:", data);
+      setRepresentantes(data);
+    } catch (err) {
+      console.error("Error al cargar representantes:", err);
+    }
+  };
+
+  const fetchSupervisores = async () => {
+    try {
+      const res = await fetch("http://localhost:3001/api/supervisores");
+      const data = await res.json();
+      console.log("Supervisores cargados:", data);
+      setSupervisores(data);
+    } catch (err) {
+      console.error("Error al cargar supervisores:", err);
+    }
+  };
   useEffect(() => {
     if (refreshFlag) {
       fetchVisitas();
+      fetchRepresentantes();
+      fetchSupervisores();
       setRefreshFlag(false);
     }
   }, [refreshFlag, setRefreshFlag]);
 
   useEffect(() => {
     fetchVisitas();
+    fetchRepresentantes();
+    fetchSupervisores();
   }, []);
+
+  const getFilteredData = () => {
+    let data;
+    switch (selectedType) {
+      case 'visitas':
+        data = visitas;
+        break;
+      case 'representantes':
+        data = representantes;
+        break;
+      case 'supervisores':
+        data = supervisores;
+        break;
+      default:
+        data = visitas;
+    }
+
+    return data.filter(item => {
+      // Date filter
+      const itemDate = new Date(item.marca_temporal);
+      const fromDate = dateRange?.from ? new Date(dateRange.from) : null;
+      const toDate = dateRange?.to ? new Date(dateRange.to) : null;
+      if (fromDate && itemDate < fromDate) return false;
+      if (toDate && itemDate > toDate) return false;
+
+      // Search filter
+      if (searchTerm) {
+        const searchLower = searchTerm.toLowerCase();
+        return Object.values(item).some(value =>
+          value && value.toString().toLowerCase().includes(searchLower)
+        );
+      }
+
+      return true;
+    });
+  };
 
   return (
     <div className="col-span-full xl:col-span-6 bg-white dark:bg-gray-800 shadow-xs rounded-xl">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
-        <h2 className="font-semibold text-gray-800 dark:text-gray-100">Customers</h2>
-      </header>      
+        <div className="flex justify-between items-center">
+          <h2 className="font-semibold text-gray-800 dark:text-gray-100">
+            {selectedType === 'visitas' ? 'Visitas' : selectedType === 'representantes' ? 'Representantes' : 'Supervisores'}
+          </h2>
+          <input
+            type="text"
+            placeholder="Buscar..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="px-3 py-1 border border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+          />
+        </div>
+        <div className="flex space-x-2 mt-2">
+          <button
+            onClick={() => setSelectedType('visitas')}
+            className={`px-4 py-2 rounded ${selectedType === 'visitas' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100'}`}
+          >
+            Visitas
+          </button>
+          <button
+            onClick={() => setSelectedType('representantes')}
+            className={`px-4 py-2 rounded ${selectedType === 'representantes' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100'}`}
+          >
+            Representantes
+          </button>
+          <button
+            onClick={() => setSelectedType('supervisores')}
+            className={`px-4 py-2 rounded ${selectedType === 'supervisores' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100'}`}
+          >
+            Supervisores
+          </button>
+        </div>
+      </header>
       <div className="p-3">
 
         {/* Table */}
@@ -137,7 +192,7 @@ function DashboardCard10({ refreshFlag, setRefreshFlag }) {
             {/* Table body */}
             <tbody className="text-sm divide-y divide-gray-100 dark:divide-gray-700/60">
               {
-      visitas.map(v => (
+      getFilteredData().map(v => (
         <React.Fragment key={v.id}>
           <tr>
             <td className="p-2 whitespace-normal">
