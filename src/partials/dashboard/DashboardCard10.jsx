@@ -80,10 +80,10 @@ function DashboardCard10({ refreshFlag, setRefreshFlag, dateRange }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-
+  const ipAddress = process.env.SERVER_HOST || 'localhost';
   const fetchVisitas = async () => {
     try {
-      const res = await fetch("http://localhost:3001/api/visitas");
+      const res = await fetch(`http://${ipAddress}:3001/api/visitas`);
       const data = await res.json();
       console.log("Visitas cargadas:", data);
       setVisitas(data);
@@ -94,7 +94,7 @@ function DashboardCard10({ refreshFlag, setRefreshFlag, dateRange }) {
 
   const fetchRepresentantes = async () => {
     try {
-      const res = await fetch("http://localhost:3001/api/representantes");
+      const res = await fetch(`http://${ipAddress}:3001/api/representantes`);
       const data = await res.json();
       console.log("Representantes cargados:", data);
       setRepresentantes(data);
@@ -105,7 +105,7 @@ function DashboardCard10({ refreshFlag, setRefreshFlag, dateRange }) {
 
   const fetchSupervisores = async () => {
     try {
-      const res = await fetch("http://localhost:3001/api/supervisores");
+      const res = await fetch(`http://${ipAddress}:3001/api/supervisores`);
       const data = await res.json();
       console.log("Supervisores cargados:", data);
       setSupervisores(data);
@@ -114,19 +114,19 @@ function DashboardCard10({ refreshFlag, setRefreshFlag, dateRange }) {
     }
   };
   useEffect(() => {
-    if (refreshFlag) {
+    if (!refreshFlag) {
       fetchVisitas();
       fetchRepresentantes();
       fetchSupervisores();
-      setRefreshFlag(false);
+      setRefreshFlag(true);
     }
   }, [refreshFlag, setRefreshFlag]);
 
-  useEffect(() => {
-    fetchVisitas();
-    fetchRepresentantes();
-    fetchSupervisores();
-  }, []);
+  // useEffect(() => {
+  //   fetchVisitas();
+  //   fetchRepresentantes();
+  //   fetchSupervisores();
+  // }, []);
 
   const getFilteredData = () => {
     let data;
